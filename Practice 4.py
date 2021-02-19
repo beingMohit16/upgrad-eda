@@ -45,11 +45,27 @@ lit_per = (all_fem - illit_fem)/illit_fem
 #Compare the literacy rates (i.e. the number of literates / total number of population) in each 
 #age group and choose the correct option.
 
-pd.pivot_table(grad_census[(grad_census['State_code'] == 0) & (grad_census['Total/Rural/Urban'] == 'Total')], index = 'Age-Group',values = 'Liit_person' ,aggfunc = 'mean')
+pd.pivot_table(grad_census[(grad_census['State_code'] != 0) & (grad_census['Total/Rural/Urban'] == 'Total') & (grad_census['Age-Group'] == 'All ages')], 
+                           index = 'Age-Group',values = 'Liit_female' ,aggfunc = 'mean' )
 
 a4_dims = (16.7, 8.27)
 plt.subplots(figsize=a4_dims)
 sns.barplot(x = grad_census['Age-Group'], y=grad_census['Liit_person'] )
 
-grad_census['Liit_person'].describe()
-grad_census['Liit_person'] = grad_census['Liit_person'].astype('int32')
+litracy_rate['Female'].describe()
+litracy_rate['Person'] = litracy_rate['Person'].astype('int32')
+
+litracy_rate = grad_census.iloc[6,[14:]]
+
+litracy_rate = grad_census.loc[:,['State_code','Area_name','Age-Group','Liit_person','Person','Total/Rural/Urban']]
+litracy_rate = litracy_rate.loc[34:]
+
+test = pd.pivot_table(litracy_rate,index = litracy_rate['Age-Group'],values = 'Liit_person',aggfunc = 'mean')
+
+test = pd.pivot_table(litracy_rate[(litracy_rate['State_code'] != 0) & (litracy_rate['Total/Rural/Urban'] == 'Total') & (litracy_rate['Age-Group'] == 'All ages')], 
+                           index = 'Area_name',values = ['Liit_person','Person'] ,aggfunc = 'mean' )
+
+test['Lit_rate'] = (test['Liit_person']/test['Person'])*100
+
+
+
