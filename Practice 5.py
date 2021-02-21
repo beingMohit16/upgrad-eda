@@ -18,3 +18,41 @@ gold_silver = gold_silver['Year' == 2008]
 
 currencies = pd.read_csv(r'E:\UPgrade\currencies.csv')
 currencies_corr = currencies.corr()
+
+nas = pd.read_csv(r'E:\UPgrade\nas.csv')
+nas.info()
+nas.isnull().sum()
+nas['Mother.edu '== 'Illiterate'].value_counts()
+
+
+pd.pivot_table(nas[(nas['Mother.edu'] == 'Illiterate')],values = nas['Mother.edu'], index = nas['Siblings'],aggfunc = 'count' )
+
+
+
+pd.pivot_table(nas[(nas, 
+                           index = nas['Siblings'],values = nas['Mother.edu'] ,aggfunc = 'count' )
+
+
+nas.groupby(['Mother.edu','Siblings'])['Siblings'].count()
+
+#You also want to understand how the average science marks vary with the father’s education level and age. 
+#Neglect the age group of 11 years since there are very few children in that segment. Mark the correct statement:
+
+nas['Science..'].describe()
+nas.groupby(['Father.edu'])['Science..'].mean()
+
+nas[nas['Age'] != '11- years'].groupby(['Father.edu'])['Science..'].mean()
+nas[nas['Age'] != '11- years'].groupby(['Age','Father.edu'])['Science..'].mean()
+
+
+
+
+
+
+
+
+
+
+
+
+
